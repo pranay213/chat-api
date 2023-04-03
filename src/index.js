@@ -4,7 +4,7 @@ const port = 3000;
 app.use(express());
 app.get("/", (req, res) => {
   //   res.send("Hello World!");
-  res.send({ Status: "Server is Running" });
+  res.send({ Status: "Server is Running", Api: "chat-api" });
 });
 
 app.listen(port, () => {
