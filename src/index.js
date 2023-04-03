@@ -1,9 +1,10 @@
 import express from "express";
 const app = express();
 const port = 3000;
-
+app.use(json());
 app.get("/", (req, res) => {
-  res.send("Hello World!");
+  //   res.send("Hello World!");
+  res.send({ Status: "Server is Running" });
 });
 
 app.listen(port, () => {
