@@ -31,7 +31,7 @@ const send_sms = async (number, OTP) => {
       }
     );
 
-    console.log(response);
+    console.log(response.data);
     return response.data;
   } catch (error) {
     console.error(error.data);

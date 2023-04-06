@@ -1,6 +1,5 @@
 const mongoose = require("mongoose");
-const { OTP_TOKEN, TokenExpiry } = require("../Functions/User");
-const { response } = require("express");
+const { OTP_TOKEN, TokenExpiry, sendOtp } = require("../Functions/User");
 const UserSchema = new mongoose.Schema(
   {
     number: { type: String, required: true },
@@ -55,13 +54,17 @@ const UserSave = async (number, otp_hash) => {
             otp_hash: otp_hash,
           });
           if (res) {
+            await sendOtp(otp_hash);
             return { status: true, message: "Send Otp successfully" };
           }
         }
       } else {
         let otp_hash = await OTP_TOKEN(number);
         let res = UpdateById(id, { number: number, otp_hash: otp_hash });
-        return { status: true, message: "Send OTP successfully" };
+        if (res) {
+          let smsResponse = await sendOtp(otp_hash);
+          return { status: true, message: "Send OTP successfully" };
+        }
       }
 
       //   await UpdateById(id, { number, otp_hash });
@@ -71,12 +74,13 @@ const UserSave = async (number, otp_hash) => {
       const newUser = new UserModel({ number, otp_hash });
       let res = await newUser.save().then((res) => console.log(res));
       if (res) {
-        return { status: true, message: "Send OTP successfully" };
+        await sendOtp(otp_hash);
       }
+      return { status: true, message: "Send OTP successfully" };
     }
   } catch (err) {
     console.log(err);
   }
 };
 module.exports = UserModel;
-module.exports = { UserSave };
+module.exports = { UserSave, findUserbyNumber };
