@@ -34,21 +34,21 @@ UserRoute.post("/verify-otp", async (req, res) => {
         const { id, otp_hash } = response[0];
         let tokenResponse = await TokenVerify(otp_hash, number, otp, id);
         if (tokenResponse) {
-          return res.status(404).json(tokenResponse);
+          return res.status(200).json(tokenResponse);
         } else {
           return res
-            .status(404)
+            .status(301)
             .json({ status: false, message: "OTP IS EXPIRED" });
         }
       } else {
         return res
-          .status(404)
+          .status(301)
           .json({ status: false, message: "Number Not found" });
       }
     } else
-      return res.status(404).json({ status: false, message: "Invalid Otp" });
+      return res.status(301).json({ status: false, message: "Invalid Otp" });
   } else
-    return res.status(404).json({ status: false, message: "Invalid Number" });
+    return res.status(301).json({ status: false, message: "Invalid Number" });
 
   res.json({ status: true });
 });
