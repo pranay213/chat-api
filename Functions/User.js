@@ -21,7 +21,7 @@ const OTP_TOKEN = async (number) => {
       otp: otp,
     },
     tokenSecret,
-    { expiresIn: 60 }
+    { expiresIn: 120 }
   );
   //   console.log(token);
   return token;
