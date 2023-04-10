@@ -37,18 +37,18 @@ UserRoute.post("/verify-otp", async (req, res) => {
           return res.status(200).json(tokenResponse);
         } else {
           return res
-            .status(301)
+            .status(201)
             .json({ status: false, message: "OTP IS EXPIRED" });
         }
       } else {
         return res
-          .status(301)
+          .status(201)
           .json({ status: false, message: "Number Not found" });
       }
     } else
-      return res.status(301).json({ status: false, message: "Invalid Otp" });
+      return res.status(201).json({ status: false, message: "Invalid Otp" });
   } else
-    return res.status(301).json({ status: false, message: "Invalid Number" });
+    return res.status(201).json({ status: false, message: "Invalid Number" });
 
   res.json({ status: true });
 });
