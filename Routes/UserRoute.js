@@ -1,6 +1,8 @@
 const express = require("express");
+const app = express();
 const { OTP_TOKEN, sendOtp, TokenVerify } = require("../Functions/User");
 const { UserSave, findUserbyNumber } = require("../Models/UserSchema");
+app.use(logger);
 
 const UserRoute = express.Router();
 
@@ -53,7 +55,7 @@ UserRoute.post("/verify-otp", async (req, res) => {
   res.json({ status: true });
 });
 
-UserRoute.post("/notifications", (req, res) => {
+UserRoute.post("/notifications", async (req, res, next) => {
   try {
     const { token } = req.body;
     return res
@@ -63,5 +65,9 @@ UserRoute.post("/notifications", (req, res) => {
     console.log(error);
   }
 });
+
+const logger = (req, res, next) => {
+  console.log(req);
+};
 
 module.exports = UserRoute;
