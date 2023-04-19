@@ -54,9 +54,10 @@ UserRoute.post("/verify-otp", async (req, res) => {
 });
 
 UserRoute.post("/notifications", (req, res) => {
+  const { token } = req.body;
   return res
     .status(200)
-    .json({ status: false, message: "You are on notifications" });
+    .json({ status: true, message: "You are on notifications", token });
 });
 
 module.exports = UserRoute;
