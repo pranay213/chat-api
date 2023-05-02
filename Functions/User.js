@@ -117,6 +117,9 @@ const authTokenGen = async (id) => {
   return token;
 };
 
+const authTokenVerify = async (jwtToken) => {
+  var decoded = await jwt.verify(jwtToken, authTokenSecret);
+};
 module.exports = {
   OTP_TOKEN,
   sendOtp,
